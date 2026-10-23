@@ -102,15 +102,6 @@ Key names from your original `user_data` pickle (same expected raw units):
 | `w_offset` | `gyro_bias_dps` |
 | `w_rotation` | `gyro_matrix` |
 
-If you already have your own `user_data.pkl` from the calibration notebook,
-you can convert it directly without repeating the physical calibration:
-
-```bash
-# ONLY for a pickle you personally created and trust (pickle is executable):
-python convert_legacy_calibration.py user_data.pkl \
-  --out data/calibration.json --i-trust-this-file
-```
-
 Use notebook 01 to learn how these are estimated. The included
 `examples/calibration.example.json` is **identity/zero and not a measured
 calibration**. Do not run real-motion experiments with synthetic demo values.

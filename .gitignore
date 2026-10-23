@@ -14,3 +14,5 @@ data/*.csv
 !data/synthetic_truth.csv
 data/*.json
 !examples/*.json
+# Cube-calibration runs and stage checkpoints contain physical sensor data.
+data/calibration_stages/
