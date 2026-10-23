@@ -134,3 +134,14 @@ def test_accel_fit_on_known_static_orientations():
     np.testing.assert_allclose(est_bias, b, atol=1e-3)
     np.testing.assert_allclose(np.linalg.norm((measured - est_bias) @ L.T, axis=1), 1., atol=1e-3)
     assert estimate_gyro_bias(np.ones((20, 3))).tolist() == [1, 1, 1]
+
+
+def test_convert_legacy_notebook_calibration():
+    from convert_legacy_calibration import convert
+    legacy = {'b': [.01, -.03, .02], 'L': np.eye(3),
+              'aRws': np.eye(3), 'w_offset': [.02, -.05, .01],
+              'w_rotation': np.eye(3)}
+    result = convert(legacy)
+    np.testing.assert_allclose(result.gyro_bias_dps, [.02, -.05, .01])
+    with pytest.raises(ValueError, match='w_offset'):
+        convert({'b': [0, 0, 0], 'L': np.eye(3)})

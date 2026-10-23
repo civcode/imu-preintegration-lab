@@ -27,10 +27,16 @@ def main(argv=None) -> int:
         # Handles Ctrl+C during setup/teardown, not only during capture.
         print("\nInterrupted while opening/closing FTDI. Interface cleanup attempted.")
         return 130
-    if result is None or not result.samples:
+    if result is None:
+        print("No capture result; nothing to save.")
+        return 1
+    # Even if overflow occurred before the first complete packet, save its
+    # diagnostic metadata rather than suppressing an important sensor error.
+    if result.overflow_detected or result.samples:
+        save_capture(result, args.out, calibrated=params is not None)
+    else:
         print("No samples received; nothing to save.")
         return 1
-    save_capture(result, args.out, calibrated=params is not None)
     print(f"Saved {len(result.samples)} samples in {args.out}; status={result.stop_reason}")
     if result.overflow_detected:
         print("WARNING: FIFO OVERFLOW. This recording is not usable as one contiguous IMU path.")
