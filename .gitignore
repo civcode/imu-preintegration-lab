@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+*.pkl
+!examples/*.pkl
+*.pyc
+*.egg-info/
+# Personal captures may be large or sensitive; keep synthetic fixtures only.
+data/*.csv
+!data/synthetic_ideal.csv
+!data/synthetic_noisy.csv
+!data/synthetic_truth.csv
+data/*.json
+!examples/*.json
